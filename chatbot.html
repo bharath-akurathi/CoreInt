@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Twin</title>
+    <link rel="icon" type="image/x-icon" href="logo.png" width="100%" height="100%">
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: "Karla", serif;
+            background-color: #ded8cb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 50px 10px;
+        }
+
+        .chatbot {
+            width: 100%;
+            background-color: #ded8cb;
+            border-radius: 15px;
+            box-shadow: 0 10px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .chatbot-header {
+            background-color: #FF6A3B;
+            color: white;
+            padding: 10px;
+            font-size: 40px;
+            text-align: center;
+        }
+
+        .chatbot-body {
+            padding: 10px;
+            height: 75vh;
+            overflow-y: auto;
+            font-size: 16px;
+            color: black;
+        }
+
+        .chatbot-footer {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+
+        .chatbot-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 50px;
+
+        }
+
+        .chatbot-send {
+            background-color: #FF6A3B;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 50px;
+
+        }
+
+        .chatbot-send:hover {
+            background-color: #d85533;
+        }
+
+        .message-wrapper {
+            display: flex;
+            margin: 10px 0;
+        }
+
+        .message-wrapper.user {
+            justify-content: flex-end;
+        }
+
+        .message-wrapper.bot {
+            justify-content: flex-start;
+        }
+
+        .message {
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .message.user {
+            background-color: #FF6A3B;
+            color: white;
+        }
+
+        .message.bot {
+            background-color: #f1f1f1;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chatbot" id="chatbot">
+        <div class="chatbot-header">CoreInt</div>
+        <div class="chatbot-body" id="chatbot-body">
+            <div class="message-wrapper bot">
+                <div class="message bot">Hi there! How can I help you today?</div>
+            </div>
+        </div>
+        <div class="chatbot-footer">
+            <input type="text" class="chatbot-input" id="chatbot-input" placeholder="Type a message...">
+            <button class="chatbot-send" id="chatbot-send">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatbotBody = document.getElementById('chatbot-body');
+        const chatbotInput = document.getElementById('chatbot-input');
+        const chatbotSend = document.getElementById('chatbot-send');
+
+        const sendMessage = () => {
+            const userInput = chatbotInput.value.trim();
+            if (userInput) {
+                const userMessageWrapper = document.createElement('div');
+                userMessageWrapper.className = 'message-wrapper user';
+
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message user';
+                userMessage.textContent = userInput;
+
+                userMessageWrapper.appendChild(userMessage);
+                chatbotBody.appendChild(userMessageWrapper);
+                chatbotBody.scrollTop = chatbotBody.scrollHeight;
+                chatbotInput.value = '';
+
+                // Bot response simulation
+                const botMessageWrapper = document.createElement('div');
+                botMessageWrapper.className = 'message-wrapper bot';
+
+                const botMessage = document.createElement('div');
+                botMessage.className = 'message bot';
+                botMessage.textContent = 'Thanks for your message!';
+
+                botMessageWrapper.appendChild(botMessage);
+                chatbotBody.appendChild(botMessageWrapper);
+                chatbotBody.scrollTop = chatbotBody.scrollHeight;
+            }
+        };
+
+        chatbotSend.addEventListener('click', sendMessage);
+
+        chatbotInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+
+</html>
